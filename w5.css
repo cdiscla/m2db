@@ -1,0 +1,130 @@
+body { 
+    opacity:  1.0;
+    border-radius: 20px;
+    font-size:100%;
+    COLOR: #6d6d6d;
+    BACKGROUND-COLOR: White;
+    FONT-FAMILY: Verdana, Arial, Sans-Serif;
+}
+p { text-align: justify; text-justify: inter-word; margin: 7px 0px 5px 0px; padding:0;font-size:1.0em;}
+br { text-align: justify; text-justify: inter-word; }
+div {margin:5px 0 0 0;padding:0;}
+li {margin:10px 0 0 0;padding:0;text-align:justify;}
+details {margin:0 0 0 10px;padding:0;}
+ul {margin:0;padding:0px 10px 10px 30px;list-style-type:square;}
+a:link {color:#0000FF;}      
+a:visited {color:#0000FF;}
+img { border: 0; }
+table {font-size:0.8em;}
+pre {
+
+    background-image:url('../white/images/paper.jpg');
+    background-repeat:repeat;
+
+    margin:  20px;
+    padding: 10px;
+    font-family: courier;
+    COLOR: #000000;
+
+}
+h1 {
+    FONT-WEIGHT: bold;
+    font-size:3.0em;
+    COLOR: #427dff;
+    FONT-FAMILY: Verdana, Arial, Sans-Serif;
+    BACKGROUND-COLOR: #ffffff;
+    text-align: center;
+}
+h2 {
+    FONT-WEIGHT: bold;
+    font-size:1.5em;
+    COLOR: #427dff;
+    FONT-FAMILY: Verdana, Arial, Sans-Serif;
+    BACKGROUND-COLOR: #e2ecf5;
+}
+.video {
+   background-color:#000000;
+   border:5px solid grey;
+   color:#64D064;
+   padding: 10px;
+   border-radius: 20px;
+   white-space:pre-wrap;
+   font-family: courier;
+   font-size: 12px;
+   width: 700px;
+}
+.video80 {
+   background-color:#000000;
+   border:5px solid grey;
+   color:#64D064;
+   padding: 10px;
+   border-radius: 20px;
+   white-space:pre-wrap;
+   font-family: courier;
+   font-size: 12px;
+   width: 90em;
+}
+.video132 {
+   background-color:#000000;
+   border:5px solid grey;
+   color:#64D064;
+   padding: 10px;
+   border-radius: 20px;
+   white-space:pre-wrap;
+   font-family: courier;
+   font-size: 12px;
+   width: 132em;
+}
+.videoWeb {
+   background-color:white;
+   border:5px solid grey;
+   color:black;
+   padding: 10px 10px 20px 20px;
+   border-radius: 20px;
+   white-space:pre-wrap;
+   font-family: Arial, Verdana, Sans-Serif;
+   font-size: 12px;
+   width: 700px;
+}
+.foot {
+    font-size:0.6em;
+    COLOR: #9e9e9e;
+    BACKGROUND-COLOR: White;
+    FONT-STYLE: italic;
+    FONT-FAMILY: Verdana, Arial, Sans-Serif;
+}
+.formula {
+    display: block;
+    float: left;
+    clear: both;
+    padding:10px 20px 10px 20px;
+    margin:15px;
+    width: fluid;
+    background:#eff;
+    border:1px solid #44b;
+    font-size:1.5em;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px black;
+}
+.ir {
+   float:right;
+   margin:0 0 0 10px
+}
+.ic {
+   display:block;
+   margin:0px auto
+}
+.dc {
+   display:table;
+   margin:0px auto
+}
+.bor {
+   border: 1px solid #000;
+}
+math {
+  display: inline;
+  font-family: Symbol, Times, CMSY10, CMEX10;
+  font-size: 120%;
+  text-align: center;
+  color: brown;
+}

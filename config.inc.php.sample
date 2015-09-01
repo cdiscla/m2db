@@ -1,0 +1,28 @@
+<?php
+# Connect strings
+$i=0;
+$i++;
+$my2conn['conn'][$i]='LocalMongo';
+$my2conn['host'][$i]='localhost:27017';
+
+$i++;
+$my2conn['conn'][$i]='Localhost2';
+$my2conn['host'][$i]='localhost:27017';
+$my2conn['user'][$i]=''; $my2conn['passwd'][$i]='';
+
+
+$i=0; $i++;
+$my2group['name'][$i]='Sample Group';
+$j=0; $j++;
+$my2group['host'][$i][$j++]='LocalMongo';
+$my2group['host'][$i][$j++]='Localhost2';
+
+
+# Repository
+$my2connRep['conn']='LocalRepo';
+$my2connRep['host']='127.0.0.1:3306';
+$my2connRep['user']='m2db';
+$my2connRep['pass']='Ple4seCh4ngeMe!';
+$my2connRep['db']='m2db';
+?>
+

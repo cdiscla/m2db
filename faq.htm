@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="w5.css" />
+<link href="https://plus.google.com/111039908225092951599" rel="me author" />
+<link rel="icon" href="../images/bdrop.png" />
+<meta name="author" content="Meo Bogliolo" />
+<title>M2DB - FAQ</title>
+<meta name="description" content="MongoDB Dashboard M2DB FAQ" />
+<meta name="keywords" content="MongoDB, FAQ" />
+</head>
+<body itemscope itemtype="http://schema.org/WebPage">
+<h1 itemprop="name"> M2DB <img src="DBguru.png" alt="DB guru" width="64"> FAQ</h1>
+
+<p>
+<span itemprop="description">
+Everything You Always Wanted to Know About <b> M2DB </b> But Were Afraid to Ask.
+<br>M2DB stands for <i>My MongoDB dashboard</i> and gives You a fast and easy to understand
+overview of MongoDB's activities and status:
+</span>
+<p>
+<img src="mo-perf2.png" alt="M2DB interface - Current Operations" class="ic" border=0 width="480">
+<p>
+Sections:
+<a href="#Gen_00">Introduction</a>,
+<a href="#Sou_00">Statistics</a>,
+<a href="#Col_00">Collector</a>,
+<a href="#Con_00">Installation and Configuration</a>,
+<a href="#Cus_00">Customization</a>,
+<a href="#ETC_00">Know bugs and limitations</a>,
+<a href="#Lic_00">License</a>.
+<p>
+
+<hr>
+<h2><span class="headline" id="Gen_00">What is M2DB?</span></h2>
+<blockquote>
+<b>M2DB</b> dashboard displays useful performance statistics for MongoDB.
+M2DB displays data based on
+<a href="http://docs.mongodb.org/master/administration/monitoring/#commands" rel="nofollow">MongoDB commands</a>
+and on
+<a href="http://docs.mongodb.org/manual/reference/system-collections/" rel="nofollow">system</a>,
+<a href="http://docs.mongodb.org/manual/reference/local-database/" rel="nofollow">local</a> and
+<a href="http://docs.mongodb.org/manual/reference/config-database/" rel="nofollow">config</a>
+collections.
+
+<p>
+M2DB does not modify any configuration or data in MongoDB.
+It can be used only to monitor systems, obtain performance data, collect statistics, ...
+To performe administrative tasks is strongly suggested to use the <b>mongo</b> shell.
+
+<p>M2DB is a web application and can be easly accessed with a browser:
+<h3>&nbsp; https://myhost.mydomain/M2DB/</h3>
+</blockquote>
+
+<h2><span class="headline" id="Gen_02">Which is the architecture?</span></h2>
+<blockquote>
+<p>
+M2DB is a web application and requires a web server (eg. Apache) that can connect to MongoDB.
+<br>
+M2DB is written in PHP and requires PHP 5 (or newer) with the MongoDB PHP extension (MongoClient).
+M2DB uses Google Chart API and requires an Internet connection to download them.
+<p>
+M2DB shows both live data from MongoDB and collected data from a repository.
+<br>
+Data collection is performed by PHP file that can be periodically executed by crontab.
+</blockquote>
+
+<h2><span class="headline" id="Gen_04">M2DB vs MongoDB compatibility</span></h2>
+<blockquote>
+M2DB can connect to any version of MongoDB.
+<p>
+M2DB uses many internal MongoDB documents.
+db.serverStatus() metrics document has been added in version 2.4,
+the cursor document has been added in version 2.6, wiredTiger statistics section
+has been added in version 3.0,
+the balancer section in sharding status has been added in version 3.0...
+<br>
+M2DB uses all the available information and shows them in useful performance graphs.
+<p>
+For best results it is suggested to use MongoDB 3.0 or later.
+</blockquote>
+
+<a href="#">Top</a>
+<hr>
+<h2><span class="headline" id="Sou_00">Statistics</span></h2>
+<blockquote>
+<p>
+M2DB is very easy to use. The user inferface is the same in each page.
+<br>
+The <b>Buttons</b> allows to change the page. The <b>Graphs</b> show the informations.
+The <b>Database info</b> section shows informations about current connections.
+The <b>Change database</b> sections allows to choose between the configured database.
+<b>M2DB release</b> is displayed in the bottom.
+<p>
+<img src="mo-dash2.png" alt="M2DB Dashboard interface commented" class="ic" width="600">
+<p>
+There are four main pages:
+<ul>
+ <li><b>Dasboard</b>: contains some of the most useful statistics for DBAs
+ <li><b>Status</b>: reports current connection to the database
+ <li><b>Performance</b>: shows performance statistics and in-depth view of most demanding commands
+ <li><b>Statistics</b>: this page allows the DBA to display all the statistics, to change the
+	time reference, ...
+</ul>
+</blockquote>
+
+<a href="#">Top</a>
+<hr>
+<h2><span class="headline" id="Sou_01">Graphical User Interface</span></h2>
+<blockquote>
+<p>
+The user inferface is the same in each page.
+The buttons, Database Info, Change Database and Release sections are reported in each page.
+<br>
+Current page button is grayed. Live data in Database Info section is displayed in italics
+while configuration data has no alterations. M2DB release can change between pages since
+they are indipendent.
+<br>
+If some part of the page are empty the reason is that M2DB can not get the information
+required to fill them. It can be a fault, a misconfiguration or these parts need
+a specific MongoDB version or a specific feature enabled.
+<p>
+
+<h3><span class="headline" id="Sou_03">Dashboard</span></h3>
+<img src="mo-dash.png" alt="M2DB Dashboard" class="ic" width="600">
+The graphs in the Dashboard Page present both live data from MongoDB and historical use.
+The operations pie is collected when the page is loaded and can change if the page is reloaded.
+
+<h3><span class="headline" id="Sou_04">Status</span></h3>
+<img src="mo-sess.png" alt="M2DB Session Status" class="ic" width="400">
+The tables shown in the Status Page give detail on operations, locks and replications
+occurring in MongoDB.
+
+<h3><span class="headline" id="Sou_05">Performance</span></h3>
+<img src="mo-perf.png" alt="M2DB Performance" class="ic" width="600">
+The Performance Page contains several graphs related to performance indicators for MongoDB.
+
+<h3><span class="headline" id="Sou_06">Statistics</span></h3>
+<img src="mo-cust.png" alt="M2DB Statistics" class="ic" width="400">
+The Statistics Page allows to choose between different MongoDB
+metrics collected and shows them in a time based graph.
+<br>
+The last day (24 hours) of collected statistics is shown , to change the time frame 
+set the <b>Time shift (hours)</b> parameter. For instance with 48 M2DB will
+show the day before yesterday statistics; with 24*60 M2DB will
+show the last two months statistic (useful with daily statistics as space usage).
+<p>
+From the statistics page a Groups Page can be reached.
+The Groups Page shows graphs from different MongoDB servers
+as they are configured in the config.inc.php file.
+</blockquote>
+
+<a href="#">Top</a>
+<hr>
+<h2><span class="headline" id="Col_00">Statistics Collector</span></h2>
+<blockquote>
+<p>
+M2DB uses a collector to collect database statistics: the collect2repo.php PHP script.
+<br>
+The collector uses a MySQL Repository to store all the statistics.
+<p>
+The collector is executed every 10 minutes.
+Some slow changing data is collected only once a day.
+</blockquote>
+
+
+<a href="#">Top</a>
+<hr>
+<h2><span class="headline" id="Con_00">Installation and configuration</span></h2>
+<blockquote>
+
+<h3>Pre requisites</h3>
+M2DB require a web server (eg. Apache) with PHP and a MongoDB driver configured.
+Admin privileges on a MySQL database are required for the Repository configuration.
+After the installation a normal MySQL user with few privileges is required.
+<p>
+To get all the information from MongoDB
+M2DB needs a user with the following privileges on each configured database:
+<ul>
+ <li>viewUser, viewRole
+ <li>inprog, cpuProfiler, storageDetails
+ <li>replSetGetStatus
+ <li>getShardMap, getShardVersion, listShards, shardingState
+ <li>getParameter, hostInfo
+ <li>collStats, dbStats, getLog, listDatabases, listCollections, listIndexes, serverStatus, top
+</ul>
+Admin roles have all the required prerequisities.
+<p>
+
+
+<h3>Download</h3>
+Download the distribution kit from the <a href="http://www.xenialab.it/meo/web/pub/m2db.zip">official download page</a>.
+
+<h3>Extract files</h3>
+Untar or unzip the distribution (be sure to unzip the subdirectories):
+<pre>
+unzip m2db.zip
+</pre>
+in your web server's document root (e.g., /var/www/).
+If you don't have direct access to your document root or don't have shell access,
+put the files in a directory on your local machine and
+transfer the directory on your web server using, for example, FTP.
+<br>
+Ensure that all the scripts have the appropriate owner
+(if PHP is running in safe mode, having some scripts with an owner different
+from the owner of other scripts will be a problem).
+<br>
+To add the MongoClient interface to PHP the following directive should be added to the php.ini
+configuration file:
+<pre>
+extension=mongo.so
+</pre>
+
+<h3>M2DB Configuration</h3>
+Now you must configure your installation. 
+<br>
+There is a <b>config.inc.php.sample</b> file that can be copied/renamed to <b>config.inc.php</b>.
+While there are many parameters the only ones that need to be configured are the
+access string (host:port, username ad password) to connect to Your MongoDB database.
+<p>
+M2DB and its repository can manage different MongoDB databases.
+<p>
+
+<h3>Collector Configuration</h3>
+Several M2DB pages are based on collected statistics.
+<br>
+The repository used by the collector is installed running 
+the <a href="m2db.sql">m2db.sql</a> script as root on a MySQL database.
+<br>
+In a default installation the statistics are collected every 10 minutes
+and have a 60 days retention. This requires about 30MB.
+<p>
+To have the collector executed every 10 minutes
+can be easly done with the following crontab:
+<pre>
+*/10 * * * * php /<i>inst_path</i>/collect2repo.php >> /tmp/m2db.log
+5 0 * * *    php /<i>inst_path</i>/collect2repo.php DAILY >> /tmp/m2db.log
+</pre>
+
+</blockquote>
+
+
+<a href="#">Top</a>
+<hr>
+<h2><span class="headline" id="Cus_00">Can I change/customize the statistics?</span></h2>
+<blockquote>
+<br>
+Statistics can be customized with the <b>custom.php</b> file.
+There are already twenty custom statistics provided in distributed file.
+You can modify the existing ones or add Your own statistics.
+Please hold a copy of Your custom file in case of M2DB software upgrade.
+<br>
+You can use any of the more than one hundred variables collected by M2DB
+on MongoDB and the details about all available databases
+(an average of ten additional variables multiplied by number of databases).
+<p>
+There is an other file with statistics: common.php.
+But this file should not be changed since it is used by the M2DB dashboard.
+</blockquote>
+
+<a href="#">Top</a>
+<hr>
+<h2><span class="headline" id="ETC_00">Known bugs and limitations</span></h2>
+<blockquote>
+<p>None.
+It's not true of course!
+<ul>
+ <li>Showing different statistics together can be useful
+ <li>Statistics should be grouped by nodes partecipating to replication and/or sharding.
+</ul>
+</blockquote>
+
+<a href="#">Top</a>
+<hr>
+<h2><span class="headline" id="Lic_00">Can I use, distribute, modify M2DB?</span></h2>
+
+<p>Yes!
+<p>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+<p>
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+<p>
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see 
+    <a href="http://www.gnu.org/licenses" rel="nofollow">http://www.gnu.org/licenses</a>.
+<p>
+
+<hr/>
+<p class="foot">
+Title: <b>M2DB FAQ</b><br />
+Date:  <meta itemprop="dateCreated"   content="2014-08-01">1st August 2014<br />
+Version: 0.0.1 (Alpha) - <meta itemprop="dateModified" content="2015-09-01">
+    <meta itemprop="datePublished" content="2015-09-01"> 
+    1st September 2015<br />
+Authors: 
+        <span itemprop="editor">meo [AT] xenialab.it</span>
+	<span itemprop="editor">christian.disclafani [AT] xenialab.it</span><br />
+</body>
+</html>
