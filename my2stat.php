@@ -276,6 +276,7 @@ echo '<a class="button" href="my2dash.php?my2Conn='.$_SESSION['my2Conn'].'">&nbs
 echo '<a class="button" href="my2curr.php?my2Conn='.$_SESSION['my2Conn'].'">&nbsp;Status&nbsp;</a>&nbsp;';
 echo '<a class="nobutton" href="my2stat.php?my2Conn='.$_SESSION['my2Conn'].'">&nbsp;Performance&nbsp;</a>&nbsp;';
 echo '<a class="button" href="my2cust.php?my2Conn='.$_SESSION['my2Conn'].'">&nbsp;Statistics&nbsp;</a>&nbsp;';
+echo '<a class="button" href="my2groups.php?my2Conn='.$_SESSION['my2Conn'].'">&nbsp;Groups&nbsp;</a>&nbsp;';
 ?>
 </div>
 
@@ -301,7 +302,8 @@ echo ' <td><a href="my2cust.php?my2Stat=9&my2Conn=' .$_SESSION['my2Conn'].'"><di
 
 <?php
 if(isset($my2conn["conn"][$my2c])) {
-    echo "Connection: <b>" . $my2conn["conn"][$my2c] . "</b>";
+	include("check_replset.php");
+	echo "Connection: <b>" . $my2conn["conn"][$my2c] . "</b><span style='background-color:yellow'>".$rs_description."</span>";
     echo "<br>Host: " . $my2conn["host"][$my2c];
 }
 if($conn_error==0) {

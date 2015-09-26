@@ -44,6 +44,7 @@
             }
 
             if($conn_error==0) {
+		$cnn->setReadPreference(MongoClient::RP_NEAREST, array());
                 $db = $cnn->selectDB("admin");
 
                 echo(" Getting server status \n");
@@ -167,6 +168,7 @@
             }
 
             if($conn_error==0) {
+		$cnn->setReadPreference(MongoClient::RP_NEAREST, array());
                 $db = $cnn->selectDB("admin");
                 echo(" Getting DB statistics \n");
                 $record = $cnn->listDBs();

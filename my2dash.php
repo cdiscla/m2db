@@ -257,6 +257,7 @@ try {
 echo('Error: ' . $e->getMessage());
 }
 if($conn_error==0) {
+$cnn->setReadPreference(MongoClient::RP_NEAREST, array());
 $record=$cnn->admin->selectCollection('$cmd.sys.inprog')->findOne(array('$all' => 1))["inprog"];
 $tot_ua=0; $tot_un=0; $tot_ba=0; $tot_bn=0; 
 foreach ($record as $obj) {
@@ -337,6 +338,7 @@ echo '<a class="nobutton" href="my2dash.php?my2Conn='.$_SESSION['my2Conn'].'">&n
 echo '<a class="button" href="my2curr.php?my2Conn='.$_SESSION['my2Conn'].'">&nbsp;Status&nbsp;</a>&nbsp;';
 echo '<a class="button" href="my2stat.php?my2Conn='.$_SESSION['my2Conn'].'">&nbsp;Performance&nbsp;</a>&nbsp;';
 echo '<a class="button" href="my2cust.php?my2Conn='.$_SESSION['my2Conn'].'">&nbsp;Statistics&nbsp;</a>&nbsp;';
+echo '<a class="button" href="my2groups.php?my2Conn='.$_SESSION['my2Conn'].'">&nbsp;Groups&nbsp;</a>&nbsp;';
 ?>
 
 <table border=0>
@@ -354,16 +356,17 @@ echo ' <td><a href="my2cust.php?my2Stat=5&my2Conn='.$_SESSION['my2Conn'].'"><div
 
 <?php
 if(isset($my2conn["conn"][$my2c])) {
-    echo "Connection: <b>" . $my2conn["conn"][$my2c] . "</b>";
+	include("check_replset.php");
+    echo "Connection: <b>" . $my2conn["conn"][$my2c] . "</b><span style='background-color:yellow'>".$rs_description."</span>";
     echo "<br>Host: " . $my2conn["host"][$my2c];
 }
 echo "<br>Repository: ".$my2connRep["conn"];
 
 if($conn_error==0) {
-$record=$cnn->test->command(array('serverStatus' => 1));
-echo "<i><br>Version: ".$record['version'];
-echo "<br>Started: ".date('Y-m-d H:i:s', $record['localTime']->sec - $record['uptime'])." (UTC)";
-echo "<br>Date: ".date('Y-m-d H:i:s', $record['localTime']->sec)." (UTC)</i>";
+	$record=$cnn->test->command(array('serverStatus' => 1));
+	echo "<i><br>Version: ".$record['version'];
+	echo "<br>Started: ".date('Y-m-d H:i:s', $record['localTime']->sec - $record['uptime'])." (UTC)";
+	echo "<br>Date: ".date('Y-m-d H:i:s', $record['localTime']->sec)." (UTC)</i>";
 }
 ?>
 <p>
