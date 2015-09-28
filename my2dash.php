@@ -1,6 +1,7 @@
 <?php
 error_reporting(E_ALL ^ E_DEPRECATED);
 ?>
+<!DOCTYPE html>
 <html>
   <head>
     <title>M2DB - Dashboard</title>
@@ -8,11 +9,11 @@ error_reporting(E_ALL ^ E_DEPRECATED);
     <link rel="icon" href="DBguru.png" />
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
-<?php date_default_timezone_set('UTC'); echo '<!Time (UTC): '. date('Y-m-d G:i:s.u') .">\n";
+<?php date_default_timezone_set('UTC'); echo '<!-- Time (UTC): '. date('Y-m-d G:i:s.u') ." -->\n";
 if ( ! file_exists('config.inc.php')) {
     echo '<h1>Configuration file missing</h1>';
     echo '<p>Please create <b>config.inc.php</b> configuration file';
-    echo '<p>See the <b><a href="faq.htm#Con_00">online documentation</a></b> for more information.';
+    echo '<p>See the <b><a href="faq.htm#Con_01">online documentation</a></b> for more information.';
     exit;
 }
 include 'common.php';
@@ -59,7 +60,7 @@ $sql= "select date_format(timest,'%d %H:%i') timest, date_format(timest,'%Y-%m-%
       '".(isset($my2stat["val4"][$my2q])?$my2stat["val4"][$my2q]:"") ."')
       group by timest, timest2
       order by timest2 limit 144";
-$result = mysql_query($sql) or die(mysql_error());
+$result = mysql_query($sql); # or die(mysql_error());
 $first=1;
 while ($record = mysql_fetch_array($result)) {
    $x1=$record['val1']; $x2=$record['val2']; $x3=$record['val3']; $x4=$record['val4'];
@@ -103,7 +104,7 @@ $sql= "select date_format(timest,'%d %H:%i') timest, date_format(timest,'%Y-%m-%
       "and timest > date_sub(now(), INTERVAL 24+".$my2ts." HOUR) ".
       "group by timest, timest2 ".
       "order by timest2 limit 144";
-$result = mysql_query($sql) or die(mysql_error());
+$result = mysql_query($sql); # or die(mysql_error());
 $first=1;
 while ($record = mysql_fetch_array($result)) {
    if ($first==1) {$first=0; $x1=$record['val1']; $x2=$record['val2']; $x3=$record['val3']; $x4=$record['val4'];} else {echo ",";} 
@@ -232,6 +233,7 @@ echo "]);var options = { title: '" . $my2stat["titl"][$my2q] .' B/sec.'."',hAxis
       }
 </script>
 
+<!-- #1 pie -->
 <script type="text/javascript">
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
@@ -254,24 +256,30 @@ try {
     echo('Error connecting to MongoDB server');
 } catch (MongoException $e) {
     $conn_error=1;
-echo('Error: ' . $e->getMessage());
+    echo('Error: ' . $e->getMessage());
 }
 if($conn_error==0) {
-$cnn->setReadPreference(MongoClient::RP_NEAREST, array());
-$record=$cnn->admin->selectCollection('$cmd.sys.inprog')->findOne(array('$all' => 1))["inprog"];
-$tot_ua=0; $tot_un=0; $tot_ba=0; $tot_bn=0; 
-foreach ($record as $obj) {
-    if (isset($obj['connectionId']))
-	if ($obj['active'])
-		$tot_ua += 1;
-	else
-		$tot_un += 1;
-    else
-	if ($obj['active'])
-		$tot_ba += 1;
-	else
-		$tot_bn += 1;
-
+    $isMaster=$cnn->test->command(array('isMaster' => 1));
+    if(isset($isMaster["ismaster"])) {
+        if($isMaster["ismaster"]=="true") {
+            if(! isset($isMaster["msg"])) {
+		$cnn->setReadPreference(MongoClient::RP_NEAREST, array());
+		$record=$cnn->admin->selectCollection('$cmd.sys.inprog')->findOne(array('$all' => 1))["inprog"];
+		$tot_ua=0; $tot_un=0; $tot_ba=0; $tot_bn=0; 
+		foreach ($record as $obj) {
+		    if (isset($obj['connectionId']))
+			if ($obj['active'])
+				$tot_ua += 1;
+			else
+				$tot_un += 1;
+		    else
+			if ($obj['active'])
+				$tot_ba += 1;
+			else
+				$tot_bn += 1;
+		}
+	}
+    }
 }
 echo "['User Active', " . $tot_ua . "],\n";
 echo "['User Inactive', " . $tot_un . "],\n";
@@ -291,6 +299,7 @@ echo "['System Inactive', " . $tot_bn . "],\n";
       }
 </script>
 
+<!-- #2 pie -->
 <script type="text/javascript">
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
@@ -357,7 +366,7 @@ echo ' <td><a href="my2cust.php?my2Stat=5&my2Conn='.$_SESSION['my2Conn'].'"><div
 <?php
 if(isset($my2conn["conn"][$my2c])) {
 	include("check_replset.php");
-    echo "Connection: <b>" . $my2conn["conn"][$my2c] . "</b><span style='background-color:yellow'>".$rs_description."</span>";
+    echo "Connection: <b>" . $my2conn["conn"][$my2c] . "</b>";
     echo "<br>Host: " . $my2conn["host"][$my2c];
 }
 echo "<br>Repository: ".$my2connRep["conn"];
@@ -366,6 +375,7 @@ if($conn_error==0) {
 	$record=$cnn->test->command(array('serverStatus' => 1));
 	echo "<i><br>Version: ".$record['version'];
 	echo "<br>Started: ".date('Y-m-d H:i:s', $record['localTime']->sec - $record['uptime'])." (UTC)";
+	echo " Running as: ".$rs_description;
 	echo "<br>Date: ".date('Y-m-d H:i:s', $record['localTime']->sec)." (UTC)</i>";
 }
 ?>
@@ -383,12 +393,14 @@ for ($i=1; $i<=count($my2conn["conn"]); $i++)
 </form>
 
 M2DB <img src="my2s.png" alt="my2 Logo">
-v.0.0.1 (Alpha) - Copyright &copy; 2015 by <a href="mailto:mail@meo.bogliolo.name">meo</a>
+v.0.0.2 (Alpha) - Copyright &copy; 2015 by <a href="mailto:mail@meo.bogliolo.name">meo</a>
 	&amp; <a href="mailto:christian.disclafani@xenialab.it">chris</a>
 <hr>
 <p >
 <b>M2DB</b> displays useful performance charts for MongoDB.
 See the <b><a href="faq.htm" onclick="javascript:void window.open('faq.htm','win_name','width=1000,height=700,toolbar=0,menubar=0,location=0,status=0,scrollbars=1,resizable=1,left=600,top=0');return false;">FAQ</a></b> 
 for more information.
+<?php date_default_timezone_set('UTC'); echo '<!-- Time (UTC): '. date('Y-m-d G:i:s.u') ."-->\n";
+?>
 </body>
 </html>

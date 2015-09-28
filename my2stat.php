@@ -1,7 +1,7 @@
 <?php
-//to avoid mysql_connect deprecated msg
 error_reporting(E_ALL ^ E_DEPRECATED);
 ?>
+<!DOCTYPE html>
 <html>
   <head>
     <title>M2DB - Statistics</title>
@@ -9,7 +9,7 @@ error_reporting(E_ALL ^ E_DEPRECATED);
     <link rel="icon" href="DBguru.png" />
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
-<?php date_default_timezone_set('UTC'); echo '<!Time (UTC): '. date('Y-m-d G:i:s.u') .">\n";
+<?php date_default_timezone_set('UTC'); echo '<!-- Time (UTC): '. date('Y-m-d G:i:s.u') ." -->\n";
 if ( ! file_exists('config.inc.php')) {
     echo '<h1>Configuration file missing</h1>';
     echo '<p>Please create <b>config.inc.php</b> configuration file';
@@ -303,14 +303,15 @@ echo ' <td><a href="my2cust.php?my2Stat=9&my2Conn=' .$_SESSION['my2Conn'].'"><di
 <?php
 if(isset($my2conn["conn"][$my2c])) {
 	include("check_replset.php");
-	echo "Connection: <b>" . $my2conn["conn"][$my2c] . "</b><span style='background-color:yellow'>".$rs_description."</span>";
+	echo "Connection: <b>" . $my2conn["conn"][$my2c] . "</b>";
     echo "<br>Host: " . $my2conn["host"][$my2c];
 }
 if($conn_error==0) {
 $record=$cnn->test->command(array('serverStatus' => 1));
-echo "<i><br>Version: ".$record['version'];
-echo "<br>Started: ".date('Y-m-d H:i:s', $record['localTime']->sec - $record['uptime'])." (UTC)";
-echo "<br>Date: ".date('Y-m-d H:i:s', $record['localTime']->sec)." (UTC)</i>";
+	echo "<i><br>Version: ".$record['version'];
+	echo "<br>Started: ".date('Y-m-d H:i:s', $record['localTime']->sec - $record['uptime'])." (UTC)";
+	echo " Running as: ".$rs_description;
+	echo "<br>Date: ".date('Y-m-d H:i:s', $record['localTime']->sec)." (UTC)</i>";
 }
 ?>
 <p>
@@ -327,7 +328,7 @@ for ($i=1; $i<=count($my2conn["conn"]); $i++)
 </form>
 
 M2DB <img src="my2s.png" alt="my2 Logo">
-v.0.0.1 (Alpha) - Copyright &copy; 2015 by <a href="mailto:mail@meo.bogliolo.name">meo</a>
+v.0.0.2 (Alpha) - Copyright &copy; 2015 by <a href="mailto:mail@meo.bogliolo.name">meo</a>
 	&amp; <a href="mailto:mail@christian.disclafani@xenialab.it">chris</a>
 <hr>
 <p >

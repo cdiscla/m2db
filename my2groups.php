@@ -1,7 +1,7 @@
 <?php
-//to avoid mysql_connect deprecated msg
 error_reporting(E_ALL ^ E_DEPRECATED);
 ?>
+<!DOCTYPE html>
 <html>
   <head>
     <title>M2DB - Custom Statistics</title>
@@ -10,7 +10,7 @@ error_reporting(E_ALL ^ E_DEPRECATED);
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
 <?php 
-date_default_timezone_set('UTC'); echo '<!Time (UTC): '. date('Y-m-d G:i:s.u') .">\n";
+date_default_timezone_set('UTC'); echo '<!-- Time (UTC): '. date('Y-m-d G:i:s.u') ." -->\n";
 if ( ! file_exists('config.inc.php')) {
     echo '<h1>Configuration file missing</h1>';
     echo '<p>Please create <b>config.inc.php</b> configuration file';
@@ -69,7 +69,7 @@ $my2ts = $_SESSION['my2TS'];
           and timest > date_sub(now(), INTERVAL 24+".$my2ts." HOUR)
           group by timest
           order by timest limit 144";
-    $result = mysql_query($sql) or die(mysql_error());
+    $result = mysql_query($sql);
     $first=1;
     $row="";
     while($record=mysql_fetch_array($result)) {
@@ -173,7 +173,7 @@ for ($i=1; $i<=count($my2group["name"]); $i++)
 </form>
 
 M2DB <img src="my2s.png" alt="my2 Logo">
-v.0.0.1 (Alpha) - Copyright &copy; 2015 by <a href="mailto:mail@meo.bogliolo.name">meo</a>
+v.0.0.2 (Alpha) - Copyright &copy; 2015 by <a href="mailto:mail@meo.bogliolo.name">meo</a>
 	&amp; <a href="mailto:mail@christian.disclafani@xenialab.it">chris</a>
 <hr>
 <p >

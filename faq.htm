@@ -100,8 +100,8 @@ There are four main pages:
  <li><b>Dasboard</b>: contains some of the most useful statistics for DBAs
  <li><b>Status</b>: reports current connection to the database
  <li><b>Performance</b>: shows performance statistics and in-depth view of most demanding commands
- <li><b>Statistics</b>: this page allows the DBA to display all the statistics, to change the
-	time reference, ...
+ <li><b>Statistics</b>: this page allows the DBA to display all the statistics, change the
+	time reference, show grouped statistics, ...
 </ul>
 </blockquote>
 
@@ -217,11 +217,12 @@ Now you must configure your installation.
 <br>
 There is a <b>config.inc.php.sample</b> file that can be copied/renamed to <b>config.inc.php</b>.
 While there are many parameters the only ones that need to be configured are the
-access string (host:port, username ad password) to connect to Your MongoDB database.
+access string (host:port, username and password) to connect to Your MongoDB database.
 <p>
 M2DB and its repository can manage different MongoDB databases.
 <p>
 
+<a id="Con_01"></a>
 <h3>Collector Configuration</h3>
 Several M2DB pages are based on collected statistics.
 <br>
@@ -264,10 +265,44 @@ But this file should not be changed since it is used by the M2DB dashboard.
 <h2><span class="headline" id="ETC_00">Known bugs and limitations</span></h2>
 <blockquote>
 <p>None.
+<p>
 It's not true of course!
+<a href="mailto:mail@meo.bogliolo.name">Contact us if You find one...</a>
+<p>
+Currently open issues are:
+  <ul>
+    <li>Problem: Anything that can go wrong will go wrong.
+     <br><i>Solution: Every solution breeds new problems.</i>
+
+    <li>This command (used in the dashboard) hangs on mongos:
+	 $record=$cnn->admin->selectCollection('$cmd.sys.inprog')->findOne(array('$all' => 1))["inprog"];
+     <br><i>Solution: TBD</i>
+  </ul>
+
+<p>
+The following list reports the bug fixed and the new funcionalities for each release:
 <ul>
- <li>Showing different statistics together can be useful
- <li>Statistics should be grouped by nodes partecipating to replication and/or sharding.
+  <li>0.0.2 (21th September 2015)
+  <ul>
+    <li>M2DB should be called without specifing a PHP file in the URL. 
+     <br><i>The index.php has been added (a copy of my2dash.php).</i>
+    <li>M2DB does not show the page when the repository can not be reached. 
+     <br><i>Now M2DB shows the page, even if the MySQL repository can not be reached;
+            of course some parts of the page can be empty.</i>
+    <li>M2DB should show information about currently replica and shard status. 
+     <br><i>The Database Info section now contains this informations.</i>
+    <li>Generated HTML is not always HTML5 compliant.
+     <br><i>Fixed several HTML warnings (eg. comments with timestamps, doctype, ...).</i>
+  </ul>
+
+  <li>0.0.1 (1st September 2015)
+  <ul>
+    <li>Showing different statistics together can be useful 
+     <br><i>Statistics can be customized with the <b>custom.php</b> file;
+            You can define a new graph with up to 4 different statistics.</i>
+    <li>Statistics should be grouped by nodes partecipating to replication and/or sharding.
+     <br><i>Group page (reachead from the statistics page) shows group statistics.</i>
+  </ul>
 </ul>
 </blockquote>
 
@@ -296,9 +331,9 @@ It's not true of course!
 <p class="foot">
 Title: <b>M2DB FAQ</b><br />
 Date:  <meta itemprop="dateCreated"   content="2014-08-01">1st August 2014<br />
-Version: 0.0.1 (Alpha) - <meta itemprop="dateModified" content="2015-09-01">
-    <meta itemprop="datePublished" content="2015-09-01"> 
-    1st September 2015<br />
+Version: 0.0.2 (Alpha) - <meta itemprop="dateModified" content="2015-09-21">
+    <meta itemprop="datePublished" content="2015-09-21"> 
+    21st September 2015<br />
 Authors: 
         <span itemprop="editor">meo [AT] xenialab.it</span>
 	<span itemprop="editor">christian.disclafani [AT] xenialab.it</span><br />

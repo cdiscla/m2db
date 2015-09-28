@@ -1,7 +1,7 @@
 <?php
-//to avoid mysql_connect deprecated msg
 error_reporting(E_ALL ^ E_DEPRECATED);
 ?>
+<!DOCTYPE html>
 <html>
   <head>
     <title>M2DB - Custom Statistics</title>
@@ -10,7 +10,7 @@ error_reporting(E_ALL ^ E_DEPRECATED);
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
 <?php 
-date_default_timezone_set('UTC'); echo '<!Time (UTC): '. date('Y-m-d G:i:s.u') .">\n";
+date_default_timezone_set('UTC'); echo '<!-- Time (UTC): '. date('Y-m-d G:i:s.u') ." -->\n";
 if ( ! file_exists('config.inc.php')) {
     echo '<h1>Configuration file missing</h1>';
     echo '<p>Please create <b>config.inc.php</b> configuration file';
